@@ -10,5 +10,14 @@
         android:name="com.example.agromallapplication.screens.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"
-        />
+        >
+        <action
+            android:id="@+id/action_loginFragment_to_dashBoardFragment2"
+            app:destination="@id/dashBoardFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashBoardFragment2"
+        android:name="com.example.agromallapplication.screens.DashBoardFragment"
+        android:label="fragment_dash_board"
+        tools:layout="@layout/fragment_dash_board" />
 </navigation>
