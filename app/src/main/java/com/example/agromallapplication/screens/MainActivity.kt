@@ -1,7 +1,8 @@
-package com.example.agromallapplication
+package com.example.agromallapplication.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.agromallapplication.R
 
 class MainActivity : AppCompatActivity() {
 
