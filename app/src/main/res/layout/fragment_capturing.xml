@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="farmers"
+            type="com.example.agromallapplication.models.Farmer" />
+    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +53,8 @@
                     android:backgroundTint="@color/colorWhite"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    android:id="@+id/farmerName"
+                    android:text="@={farmers.farmerName}"
                     android:textColor="@color/colorWhite"
                     android:hint="Name" />
 
@@ -66,6 +73,8 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:hint="Phone Number"
+                    android:id="@+id/phoneNumber"
+                    android:text="@={farmers.phoneNumber}"
                     android:textColor="@color/colorWhite"
                     android:inputType="number"/>
 
@@ -82,6 +91,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorWhite"
+                    android:text="@={farmers.farmerAddress}"
+                    android:id="@+id/address"
                     android:hint="Contact Address" />
 
             </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
@@ -100,12 +111,18 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="@color/colorWhite"
+                    android:id="@+id/email"
+                    android:text="@={farmers.farmerEmail}"
                     android:hint="Email" />
 
             </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
                 android:layout_width="wrap_content"
+                android:id="@+id/photo"
                 android:layout_height="50dp"
                 android:text="Upload Picture"
                 android:textColor="@color/colorWhite"
@@ -113,9 +130,18 @@
                 android:layout_gravity="end"
                 android:background="@color/colorPrimaryDark"
                 />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/uploadPictureName"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Picture Uploaded"
+                    android:textSize="14sp"/>
+                </LinearLayout>
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"

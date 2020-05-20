@@ -172,7 +172,6 @@
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             />
-
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
