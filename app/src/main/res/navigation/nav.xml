@@ -38,18 +38,6 @@
             app:destination="@id/mapLocationFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.agromallapplication.screens.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" >
-        <action
-            android:id="@+id/action_mapFragment_to_dashBoardFragment2"
-            app:destination="@id/dashBoardFragment2" />
-        <argument
-            android:name="completeFarmInfo"
-            app:argType="com.example.agromallapplication.models.Farmer" />
-    </fragment>
-    <fragment
         android:id="@+id/singleFarmerFragment"
         android:name="com.example.agromallapplication.screens.SingleFarmerFragment"
         android:label="SingleFarmerFragment"

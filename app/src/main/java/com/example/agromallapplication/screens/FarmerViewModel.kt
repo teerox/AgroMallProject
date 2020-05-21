@@ -1,11 +1,12 @@
 package com.example.agromallapplication.screens
 
 import android.graphics.Color
+import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
 
-class ViewModel (){
+class FarmerViewModel(): ViewModel(){
 
 
 
