@@ -34,20 +34,8 @@
         tools:layout="@layout/fragment_capturing"
         >
         <action
-            android:id="@+id/action_capturingFragment_to_farmCapturingFragment"
-            app:destination="@id/farmCapturingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/farmCapturingFragment"
-        android:name="com.example.agromallapplication.screens.FarmCapturingFragment"
-        android:label="FarmCapturingFragment"
-        tools:layout="@layout/fragment_farm_capturing">
-        <action
-            android:id="@+id/action_farmCapturingFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-        <argument
-            android:name="farmerInfo"
-            app:argType="com.example.agromallapplication.models.Farmer" />
+            android:id="@+id/action_capturingFragment_to_mapLocationFragment"
+            app:destination="@id/mapLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -66,4 +54,16 @@
         android:name="com.example.agromallapplication.screens.SingleFarmerFragment"
         android:label="SingleFarmerFragment"
         tools:layout="@layout/fragment_single_farmer"/>
+    <fragment
+        android:id="@+id/mapLocationFragment"
+        android:name="com.example.agromallapplication.screens.MapLocationFragment"
+        android:label="MapLocationFragment"
+        tools:layout="@layout/fragment_map_location">
+        <action
+            android:id="@+id/action_mapLocationFragment_to_dashBoardFragment2"
+            app:destination="@id/dashBoardFragment2" />
+        <argument
+            android:name="farmDetails"
+            app:argType="com.example.agromallapplication.models.Farmer" />
+    </fragment>
 </navigation>

@@ -13,8 +13,7 @@ data class Farmer(var farmerName:String = "",
                   var farmerImage:String = "",
                   var farmName:String = "",
                   var farmLocation:String = "",
-                  var farmCoordinate:ArrayList<String>? = arrayListOf
-("123","hhhh")): Parcelable
+                  var farmCoordinate:MutableList<String>? = mutableListOf()): Parcelable
 {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)var uid:Int? = 0
