@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/backgd"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="24dp"
+            >
+        <TextView
+            android:id="@+id/farmInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Farm Information"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+/>
+
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+                app:borderWidth="2dp"
+                app:cornerRadius="8dp"
+                android:padding="16dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:backgroundTint="@color/colorWhite"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:id="@+id/farmNameID"
+                    android:textColor="@color/colorWhite"
+                    android:hint="Name" />
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:hint="Farm Location"
+                    android:id="@+id/farmLocationID"
+                    android:textColor="@color/colorWhite"
+                    android:inputType="number"/>
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:id="@+id/loc"
+                android:text="Get Farm Coordinates"/>
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+
+                app:borderWidth="2dp"
+                app:cornerRadius="8dp"
+                android:padding="16dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:inputType="none"
+                    android:id="@+id/firstCoordinateID"
+                    android:hint="1st Coordinate"
+                    android:textColor="@color/colorWhite"
+                    />
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+
+            <Button
+                android:layout_width="wrap_content"
+              android:id="@+id/firstCoordinateButton"
+                android:layout_height="30dp"
+                android:text="Generate Coordinate"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:layout_margin="8dp"
+                android:layout_gravity="end"
+                android:background="@color/colorPrimaryDark"
+                />
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+                app:borderWidth="2dp"
+                app:cornerRadius="8dp"
+                android:padding="16dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:hint="2nd Coordinate"
+                    android:id="@+id/secondCoordinateID"
+                    android:textColor="@color/colorWhite"
+                    android:inputType="none"/>
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Generate Coordinate"
+                android:layout_margin="8dp"
+                android:id="@+id/secondCoordinateButton"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="end"
+                android:background="@color/colorPrimaryDark"
+                />
+
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+                app:borderWidth="2dp"
+                app:cornerRadius="8dp"
+                android:padding="16dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:hint="3rd Coordinate"
+                    android:id="@+id/thirdCoordinateID"
+                    android:textColor="@color/colorWhite"
+                    android:inputType="none"/>
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Generate Coordinate"
+                android:id="@+id/thirdCoordinateButton"
+                android:textColor="@color/colorWhite"
+                android:layout_margin="8dp"
+                android:textAllCaps="false"
+                android:layout_gravity="end"
+                android:background="@color/colorPrimaryDark"
+                />
+
+            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor="@color/colorWhite"
+                app:borderWidth="2dp"
+                app:cornerRadius="8dp"
+                android:padding="16dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:hint="4th Coordinate"
+                    android:id="@+id/fourthCoordinateID"
+                   android:inputType="none"
+                    android:textColor="@color/colorWhite"
+                    />
+
+            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Generate Coordinate"
+                android:id="@+id/fourthCoordinateButton"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="4dp"
+                android:textAllCaps="false"
+                android:layout_gravity="end"
+                android:background="@color/colorPrimaryDark"
+                />
+            <Button
+                android:id="@+id/generateFarmCoordinate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:textSize="16sp"
+                android:background="@color/colorWhite"
+                android:text="Generate Farm Coordinates"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</layout>

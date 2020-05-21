@@ -19,5 +19,51 @@
         android:id="@+id/dashBoardFragment2"
         android:name="com.example.agromallapplication.screens.DashBoardFragment"
         android:label="fragment_dash_board"
-        tools:layout="@layout/fragment_dash_board" />
+        tools:layout="@layout/fragment_dash_board" >
+        <action
+            android:id="@+id/action_dashBoardFragment2_to_capturingFragment"
+            app:destination="@id/capturingFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment2_to_singleFarmerFragment"
+            app:destination="@id/singleFarmerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/capturingFragment"
+        android:name="com.example.agromallapplication.screens.CapturingFragment"
+        android:label="CapturingFragment"
+        tools:layout="@layout/fragment_capturing"
+        >
+        <action
+            android:id="@+id/action_capturingFragment_to_mapLocationFragment"
+            app:destination="@id/mapLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.agromallapplication.screens.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_dashBoardFragment2"
+            app:destination="@id/dashBoardFragment2" />
+        <argument
+            android:name="completeFarmInfo"
+            app:argType="com.example.agromallapplication.models.Farmer" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleFarmerFragment"
+        android:name="com.example.agromallapplication.screens.SingleFarmerFragment"
+        android:label="SingleFarmerFragment"
+        tools:layout="@layout/fragment_single_farmer"/>
+    <fragment
+        android:id="@+id/mapLocationFragment"
+        android:name="com.example.agromallapplication.screens.MapLocationFragment"
+        android:label="MapLocationFragment"
+        tools:layout="@layout/fragment_map_location">
+        <action
+            android:id="@+id/action_mapLocationFragment_to_dashBoardFragment2"
+            app:destination="@id/dashBoardFragment2" />
+        <argument
+            android:name="farmDetails"
+            app:argType="com.example.agromallapplication.models.Farmer" />
+    </fragment>
 </navigation>

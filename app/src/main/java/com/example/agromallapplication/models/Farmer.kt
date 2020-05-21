@@ -6,15 +6,15 @@ import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Farmer(var farmerName:String,
-                  var farmerAddress:String,
-                  var farmerEmail:String,
-                  var phoneNumber:String,
-                  var farmerImage:String,
-                  var farmName:String,
-                  var farmlocation:String,
-                  var farmCoordinate:ArrayList<String>): Parcelable
+data class Farmer(var farmerName:String = "",
+                  var farmerAddress:String = "",
+                  var farmerEmail:String = "",
+                  var phoneNumber:String = "",
+                  var farmerImage:String = "",
+                  var farmName:String = "",
+                  var farmLocation:String = "",
+                  var farmCoordinate:MutableList<String>? = mutableListOf()): Parcelable
 {
     @IgnoredOnParcel
-    @PrimaryKey(autoGenerate = true)var uid:Int = 0
+    @PrimaryKey(autoGenerate = true)var uid:Int? = 0
 }
