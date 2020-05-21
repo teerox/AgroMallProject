@@ -71,21 +71,28 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION)
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
         }
+
         binding =
             DataBindingUtil.inflate(inflater,
                 R.layout.fragment_map_location,
                 container, false)
        // Places.initialize(requireContext().applicationContext, getString(R.string.google_maps_key))
+
         binding.firstCoordinateID.isEnabled = false
         binding.secondCoordinateID.isEnabled = false
         binding.thirdCoordinateID.isEnabled = false
         binding.fourthCoordinateID.isEnabled = false
         mapView = binding.map
+
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
+
+
         val args: MapLocationFragmentArgs by navArgs()
-        var farmerDetails = args.farmDetails
+
+        //Details of farmer from the Capture Fragements Screen
+        val farmerDetails = args.farmDetails
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -168,23 +175,22 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
+
         binding.save.setOnClickListener {
-            allCoordinateArray.addAll(coordinateArray)
-            allCoordinateArray.addAll(coordinateArray2)
-            allCoordinateArray.addAll(coordinateArray3)
-            allCoordinateArray.addAll(coordinateArray4)
+
+            saveCoordinatesInArray()
+
             val completeDetails = Farmer(farmerDetails.farmerName,farmerDetails.farmerAddress,
                 farmerDetails.farmerEmail,farmerDetails.phoneNumber,farmerDetails.farmerImage,farmerDetails.farmName,
                 farmerDetails.farmLocation,allCoordinateArray)
-            val add =  mMap.addPolygon(PolygonOptions().add(LatLng(-35.016, 143.321),
-                LatLng(-34.747, 145.592),
-                LatLng(-34.364, 147.891),
-                LatLng(-33.501, 150.217)).strokeColor(Color.RED)
-                .fillColor(Color.BLUE)
-            )
-            add.isVisible = true
+
 
             Log.e("AllArray", completeDetails.toString())
+
+        }
+
+
+        binding.drawPolygon.setOnClickListener {
 
         }
 
@@ -273,6 +279,16 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         }
         updateLocationUI(mMap,requireContext(),requireActivity())
     }
+
+
+
+    private fun saveCoordinatesInArray(){
+        allCoordinateArray.addAll(coordinateArray)
+        allCoordinateArray.addAll(coordinateArray2)
+        allCoordinateArray.addAll(coordinateArray3)
+        allCoordinateArray.addAll(coordinateArray4)
+    }
+
 
 
 

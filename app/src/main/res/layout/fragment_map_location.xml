@@ -201,17 +201,18 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:weightSum="2">
+
         <Button
-            android:id="@+id/generateFarmCoordinate"
+            android:id="@+id/drawPolygon"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="26dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:background="@color/colorWhite"
             android:text="Draw Polygon"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="8dp"
             android:textSize="16sp" />
             <Button
                 android:id="@+id/save"

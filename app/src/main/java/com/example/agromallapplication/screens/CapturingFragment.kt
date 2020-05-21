@@ -65,8 +65,8 @@ class CapturingFragment : Fragment() {
             val phoneNumber = binding.phoneNumber.text.toString()
             val address = binding.address.text.toString()
             val email = binding.email.text.toString()
-            var farmName = binding.farmNameID.text.toString()
-            var farmLocation = binding.farmLocationID.text.toString()
+            val farmName = binding.farmNameID.text.toString()
+            val farmLocation = binding.farmLocationID.text.toString()
 
             val farmerDetails = Farmer(name,address,email,phoneNumber,farmerPicture,farmName,farmLocation)
 
