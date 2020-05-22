@@ -21,8 +21,8 @@ class DatabaseModule(var application: BaseApplication){
 
     @Singleton
     @Provides
-    internal fun provideRoomDatabase(context: Context): RoomDatabase {
-        return Room.databaseBuilder(context, RoomDatabase::class.java, "farmer-db")
+    internal fun provideRoomDatabase(context: Context): FarmerDatabase {
+        return Room.databaseBuilder(context, FarmerDatabase::class.java, "farmer-db")
             .fallbackToDestructiveMigration()
             .build()
     }

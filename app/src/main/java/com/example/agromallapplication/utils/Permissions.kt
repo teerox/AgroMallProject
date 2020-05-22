@@ -11,29 +11,33 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 
 
-object Location{
+object Permissions{
+
      const val TAG = "Response"
      const val DEFAULT_ZOOM = 15
      const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
      const val KEY_CAMERA_POSITION = "camera_position"
      const val KEY_LOCATION = "location"
+     const val REQUEST_CODE = 1
+     const val REQUEST_TAKE_PHOTO = 2
      var mLocationPermissionGranted = false
      var mLastKnownLocation: Location? = null
+    private const val PERMISSIONS_REQUEST = 1
 
-    fun getLocationPermission(context: Context,activity: Activity) {
-
-        if (ContextCompat.checkSelfPermission(context.applicationContext,
+    fun getLocationPermission(activity: Activity) {
+        if (ContextCompat.checkSelfPermission(activity.applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true
         } else {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                PERMISSIONS_REQUEST
             )
         }
     }
 
-     fun updateLocationUI(mMap:GoogleMap,context: Context,activity: Activity) {
+
+     fun updateLocationUI(mMap:GoogleMap,activity: Activity) {
         if (mMap == null) {
             return
         }
@@ -45,16 +49,40 @@ object Location{
                 mMap.isMyLocationEnabled = false
                 mMap.uiSettings.isMyLocationButtonEnabled = false
                 mLastKnownLocation = null
-                getLocationPermission(context,activity)
+                getLocationPermission(activity)
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message.toString())
         }
     }
 
+
+     fun getGalleryPermission(activity: Activity){
+       if (ContextCompat.checkSelfPermission(activity.applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+            == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                PERMISSIONS_REQUEST
+            )
+
+        }
+    }
+
+     fun getCameraPermission(activity: Activity) {
+
+        if (ContextCompat.checkSelfPermission(activity.applicationContext,
+                Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA),
+                PERMISSIONS_REQUEST
+            )
+        }
+    }
+
+
 }
-interface GetResult{
-    fun onSuccess(result: String)
-    fun onFailure(failed:String)
-}
+
 

@@ -1,10 +1,6 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.maplocation
 
-import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,34 +8,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.agromallapplication.BaseApplication
 
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentMapLocationBinding
 import com.example.agromallapplication.models.Farmer
+import com.example.agromallapplication.screens.viewmodel.FarmerViewModel
 import com.example.agromallapplication.utils.GetResult
-import com.example.agromallapplication.utils.Location.DEFAULT_ZOOM
-import com.example.agromallapplication.utils.Location.KEY_CAMERA_POSITION
-import com.example.agromallapplication.utils.Location.KEY_LOCATION
-import com.example.agromallapplication.utils.Location.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-import com.example.agromallapplication.utils.Location.TAG
-import com.example.agromallapplication.utils.Location.getLocationPermission
-import com.example.agromallapplication.utils.Location.mLastKnownLocation
-import com.example.agromallapplication.utils.Location.mLocationPermissionGranted
-import com.example.agromallapplication.utils.Location.updateLocationUI
+import com.example.agromallapplication.utils.Permissions.DEFAULT_ZOOM
+import com.example.agromallapplication.utils.Permissions.KEY_CAMERA_POSITION
+import com.example.agromallapplication.utils.Permissions.KEY_LOCATION
+import com.example.agromallapplication.utils.Permissions.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+import com.example.agromallapplication.utils.Permissions.TAG
+import com.example.agromallapplication.utils.Permissions.getLocationPermission
+import com.example.agromallapplication.utils.Permissions.mLastKnownLocation
+import com.example.agromallapplication.utils.Permissions.mLocationPermissionGranted
+import com.example.agromallapplication.utils.Permissions.updateLocationUI
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.PlacesClient
-import kotlinx.android.synthetic.main.fragment_map_location.*
+import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -62,21 +58,30 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
 
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var farmerViewModel: FarmerViewModel
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        (requireActivity().application as BaseApplication).component.inject(this)
+
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION)
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
         }
-
+        // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater,
                 R.layout.fragment_map_location,
                 container, false)
        // Places.initialize(requireContext().applicationContext, getString(R.string.google_maps_key))
+
+        farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
         binding.firstCoordinateID.isEnabled = false
         binding.secondCoordinateID.isEnabled = false
@@ -96,11 +101,12 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+
         binding.firstCoordinateButton.setOnClickListener {
             deviceLocation(object :GetResult{
                 override fun onSuccess(result: String) {
                     Log.e("First", result)
-                    binding.firstCoordinateID.setText("Success")
+                    binding.firstCoordinateID.setText(getString(R.string.success))
                     coordinateArray.clear()
                     coordinateArray.add(result)
 
@@ -114,6 +120,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.secondCoordinateButton.setOnClickListener {
+            getLocationPermission(requireActivity())
             if(binding.firstCoordinateID.text.isEmpty()){
                 Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
                // binding.secondCoordinateID.setText("Failed")
@@ -122,7 +129,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Second", result)
-                        binding.secondCoordinateID.setText("Success")
+                        binding.secondCoordinateID.setText(R.string.success)
                         coordinateArray2.clear()
                         coordinateArray2.add(result)
                     }
@@ -136,13 +143,14 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.thirdCoordinateButton.setOnClickListener {
+            getLocationPermission(requireActivity())
             if(binding.secondCoordinateID.text.isEmpty()){
                 Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
             }else {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Third", result)
-                        binding.thirdCoordinateID.setText("Success")
+                        binding.thirdCoordinateID.setText(R.string.success)
                         coordinateArray3.clear()
                         coordinateArray3.add(result)
                     }
@@ -156,13 +164,14 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.fourthCoordinateButton.setOnClickListener {
+            getLocationPermission(requireActivity())
             if(binding.thirdCoordinateID.text.isEmpty()){
                 Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
             }else {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Fourth", result)
-                        binding.fourthCoordinateID.setText("Success")
+                        binding.fourthCoordinateID.setText(R.string.success)
                         coordinateArray4.clear()
                         coordinateArray4.add(result)
                     }
@@ -177,21 +186,26 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
 
         binding.save.setOnClickListener {
-
             saveCoordinatesInArray()
-
             val completeDetails = Farmer(farmerDetails.farmerName,farmerDetails.farmerAddress,
                 farmerDetails.farmerEmail,farmerDetails.phoneNumber,farmerDetails.farmerImage,farmerDetails.farmName,
                 farmerDetails.farmLocation,allCoordinateArray)
-
-
-            Log.e("AllArray", completeDetails.toString())
+                farmerViewModel.saveFarmerData(completeDetails)
+                Log.e("AllArray", completeDetails.toString())
+                val action = MapLocationFragmentDirections.actionMapLocationFragmentToDashBoardFragment2()
+                findNavController().navigate(action)
+                Snackbar.make(binding.root,"Information Saved",Snackbar.LENGTH_LONG).show()
 
         }
 
 
         binding.drawPolygon.setOnClickListener {
-
+           val success = farmerViewModel.drawPolygon(allCoordinateArray,mMap)
+            if (success){
+                Toast.makeText(requireContext(),"Success",Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(requireContext(),"failed",Toast.LENGTH_LONG).show()
+            }
         }
 
         return binding.root
@@ -200,7 +214,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (mMap != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, mMap!!.cameraPosition)
+            outState.putParcelable(KEY_CAMERA_POSITION, mMap.cameraPosition)
             outState.putParcelable(KEY_LOCATION, mLastKnownLocation)
             super.onSaveInstanceState(outState)
         }
@@ -211,14 +225,15 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         mMap = map
 
         // Prompt the user for permission.
-        getLocationPermission(requireContext(),requireActivity())
-        updateLocationUI(mMap,requireContext(),requireActivity())
+        getLocationPermission(requireActivity())
+        updateLocationUI(mMap,requireActivity())
         // deviceLocation
     }
 
 
     //DEVICE LOCATION
     private fun deviceLocation(getResult: GetResult) {
+
             try {
                 if (mLocationPermissionGranted) {
                     val locationResult = mFusedLocationProviderClient!!.lastLocation
@@ -259,7 +274,10 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
             } catch (e: SecurityException) {
+                Toast.makeText(requireContext(),"Location request isn't Enabled",Toast.LENGTH_LONG).show()
                 Log.e("Exception: %s", e.message.toString())
+                val action = MapLocationFragmentDirections.actionMapLocationFragmentToDashBoardFragment2()
+                findNavController().navigate(action)
             }
         }
 
@@ -277,7 +295,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-        updateLocationUI(mMap,requireContext(),requireActivity())
+        updateLocationUI(mMap,requireActivity())
     }
 
 

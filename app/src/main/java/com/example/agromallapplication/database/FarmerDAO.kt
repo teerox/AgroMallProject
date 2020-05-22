@@ -18,7 +18,7 @@ interface FarmerDAO {
     fun insertAll(vararg farmer: Farmer)
 
     @Query("DELETE FROM farmers WHERE uid = :farmerId")
-    fun deleteMovieById(farmerId: Long): Int
+    fun deleteFarmById(farmerId: Long): Int
 
 
 }

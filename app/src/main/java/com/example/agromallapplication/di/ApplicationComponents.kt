@@ -3,6 +3,11 @@ package com.example.agromallapplication.di
 import com.example.agromallapplication.BaseApplication
 import com.example.agromallapplication.di.module.DatabaseModule
 import com.example.agromallapplication.screens.*
+import com.example.agromallapplication.screens.capture.CapturingFragment
+import com.example.agromallapplication.screens.dashboard.DashBoardFragment
+import com.example.agromallapplication.screens.login.LoginFragment
+import com.example.agromallapplication.screens.maplocation.MapLocationFragment
+import com.example.agromallapplication.screens.singlefarmer.SingleFarmerFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,5 +22,5 @@ interface ApplicationComponents {
     fun inject(fragment: DashBoardFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: SingleFarmerFragment)
-    fun inject(fragment:MapLocationFragment)
+    fun inject(fragment: MapLocationFragment)
 }

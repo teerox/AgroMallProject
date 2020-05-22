@@ -1,18 +1,16 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.login
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentLoginBinding
-import kotlinx.android.synthetic.main.fragment_login.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -38,7 +36,8 @@ class LoginFragment : Fragment() {
 
             if (userEmail == "test@theagromall.com " && userPassword == "password"){
                 //move to the dashBoard
-                val navigate = LoginFragmentDirections.actionLoginFragmentToDashBoardFragment2()
+                val navigate =
+                    LoginFragmentDirections.actionLoginFragmentToDashBoardFragment2()
                 findNavController().navigate(navigate)
                 hideView(binding.wrongEmail,binding.wrongPassword)
             }else{

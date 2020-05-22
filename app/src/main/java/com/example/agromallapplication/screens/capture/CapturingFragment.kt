@@ -1,14 +1,8 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.capture
 
-import android.Manifest
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,23 +11,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentCapturingBinding
 import com.example.agromallapplication.models.Farmer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import java.io.ByteArrayOutputStream
+import com.example.agromallapplication.utils.Permissions.REQUEST_CODE
+import com.example.agromallapplication.utils.Permissions.REQUEST_TAKE_PHOTO
+import com.example.agromallapplication.utils.Permissions.getCameraPermission
+import com.example.agromallapplication.utils.Permissions.getGalleryPermission
+
 import java.io.File
 import java.io.IOException
-import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,8 +35,6 @@ import java.util.*
 class CapturingFragment : Fragment() {
 
     lateinit var binding:FragmentCapturingBinding
-    private var REQUEST_CODE = 1
-    private var REQUEST_TAKE_PHOTO = 2
     private var farmerPicture = ""
     private lateinit var currentPhotoPath: String
 
@@ -70,7 +59,10 @@ class CapturingFragment : Fragment() {
 
             val farmerDetails = Farmer(name,address,email,phoneNumber,farmerPicture,farmName,farmLocation)
 
-            val action = CapturingFragmentDirections.actionCapturingFragmentToMapLocationFragment(farmerDetails)
+            val action =
+                CapturingFragmentDirections.actionCapturingFragmentToMapLocationFragment(
+                    farmerDetails
+                )
             findNavController().navigate(action)
         }
 
@@ -81,17 +73,12 @@ class CapturingFragment : Fragment() {
 
     //select photo from gallery
     private fun uploadPicture(){
+        getGalleryPermission(requireActivity())
         val image = Intent()
-        if (ContextCompat.checkSelfPermission(this.requireContext(),
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //If no permission, request permission
-            ActivityCompat.requestPermissions(Activity().parent,
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE)
-        } else {
             image.type = "image/*"
             image.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(image,REQUEST_CODE)
-        }
+        
     }
 
 
@@ -115,6 +102,7 @@ class CapturingFragment : Fragment() {
 
     //Activate Camera to take Picture
     private fun camera() {
+        getCameraPermission(requireActivity())
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
@@ -133,10 +121,6 @@ class CapturingFragment : Fragment() {
                         "com.example.agromallapplication.fileprovider",
                         it
                     )
-//dat=content://com.android.providers.media.documents/document/image:32866 flg=0x1 }
-//// E/ResultUpload: content://com.android.providers.media.documents/document/image%3A32866
-                    //content://com.example.android.fileprovider/my_images/Pictures/JPEG_20200520_094727_8760554604226385112.jpg
-                    Log.e("photoUri",photoURI.toString())
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                 }
@@ -149,7 +133,6 @@ class CapturingFragment : Fragment() {
     //choice btw camera of gallery
     private fun takePhoto(){
         val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
-
         dialogBuilder.setTitle("Photo")
         dialogBuilder.setMessage("Select Photo")
         dialogBuilder.setPositiveButton("Camera"){ _, _ ->
