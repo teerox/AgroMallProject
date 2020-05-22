@@ -92,6 +92,7 @@ class SingleFarmerFragment : Fragment() , OnMapReadyCallback {
             farmerViewModel.coordinates(farmer,mMap)
             farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
             val success = farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
+
             if (success) {
                 Toast.makeText(requireContext(), "Success", Toast.LENGTH_LONG).show()
             } else {
