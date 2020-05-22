@@ -1,18 +1,24 @@
 package com.example.agromallapplication.screens.dashboard
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.agromallapplication.BaseApplication
 
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentDashBoardBinding
+import com.example.agromallapplication.models.Farmer
 import com.example.agromallapplication.screens.viewmodel.FarmerViewModel
 import com.example.agromallapplication.utils.Permissions.getLocationPermission
 import javax.inject.Inject
@@ -24,12 +30,14 @@ import javax.inject.Inject
 class DashBoardFragment : Fragment() {
 
     lateinit var binding:FragmentDashBoardBinding
-
-
+    private var farmersArray = ArrayList<Farmer>()
+    lateinit var adapter: FarmerAdapter
+    lateinit var recyclerView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var farmerViewModel: FarmerViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +50,26 @@ class DashBoardFragment : Fragment() {
 
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
+        recyclerView = binding.recycler
+
         farmerViewModel.getAllFarmers().observeForever {
             Log.e("All farmers",it.toString())
+            binding.numberOfFarmers.text = it.size.toString()
+            farmersArray.clear()
+            farmersArray.addAll(it)
+            adapter.notifyDataSetChanged()
+
         }
+
+
+        adapter = FarmerAdapter(farmersArray){
+            val action = DashBoardFragmentDirections.actionDashBoardFragment2ToSingleFarmerFragment(it)
+            findNavController().navigate(action)
+
+        }
+
+
+        recyclerView.adapter = adapter
 
 
         binding.addNew.setOnClickListener {
@@ -52,7 +77,38 @@ class DashBoardFragment : Fragment() {
                 DashBoardFragmentDirections.actionDashBoardFragment2ToCapturingFragment()
             findNavController().navigate(action)
         }
+
+
+        binding.logout.setOnClickListener {
+            val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
+            dialogBuilder.setMessage("Do you want to logout")
+            dialogBuilder.setPositiveButton("Yes"){ _, _ ->
+                val action = DashBoardFragmentDirections.actionDashBoardFragment2ToLoginFragment()
+                findNavController().navigate(action)
+                val sharedPreferences = activity?.getSharedPreferences(
+                    "login", Context.MODE_PRIVATE)
+                    sharedPreferences!!.edit().clear().apply()
+            }
+            dialogBuilder.setNegativeButton("No"){
+                    _,_ ->
+
+            }
+
+            //show the dialogue
+            val alert = dialogBuilder.create()
+            alert.setCanceledOnTouchOutside(false)
+            alert.show()
+        }
+
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
         return binding.root
     }
+
+
+
+
 
 }

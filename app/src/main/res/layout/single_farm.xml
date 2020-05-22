@@ -40,20 +40,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Name" />
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@{farmer.farmerName}" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Farm Name" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginBottom="16dp"
-                    android:text="Location" />
+                    android:text="@{farmer.farmLocation}"/>
 
             </LinearLayout>
 

@@ -111,31 +111,31 @@
             android:textAllCaps="false"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/signUpLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextField"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
+<!--    <LinearLayout-->
+<!--        android:id="@+id/signUpLink"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/editTextField"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:gravity="center"-->
 
-        app:layout_constraintRight_toRightOf="parent" >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/don_t_have_account"
-        android:layout_marginEnd="4dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="14sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register_now"
-        android:textColor="@color/registerNow"
-        android:textSize="16sp"
-/>
-    </LinearLayout>
+<!--        app:layout_constraintRight_toRightOf="parent" >-->
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/don_t_have_account"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:textColor="@color/colorWhite"-->
+<!--        android:textSize="14sp" />-->
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/register_now"-->
+<!--        android:textColor="@color/registerNow"-->
+<!--        android:textSize="16sp"-->
+<!--/>-->
+<!--    </LinearLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

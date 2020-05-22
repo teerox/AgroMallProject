@@ -11,6 +11,7 @@ import com.example.agromallapplication.models.Farmer
 import com.example.agromallapplication.repository.FarmerRepository
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
@@ -140,6 +141,33 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
         }else{
             true
         }
+
+    }
+
+
+
+    private fun drawMarker(point :LatLng,mMap:GoogleMap){
+        val marker = MarkerOptions()
+        marker.position(point)
+        mMap.addMarker(marker)
+    }
+
+    fun coordinates(farmer:Farmer,mMap:GoogleMap){
+        val newLatLon1 = farmer.farmCoordinate!![0].split("/")
+        val newLatLon2 = farmer.farmCoordinate!![1].split("/")
+        val newLatLon3 = farmer.farmCoordinate!![2].split("/")
+        val newLatLon4 = farmer.farmCoordinate!![3].split("/")
+
+        val firstLag = LatLng(newLatLon1[1].toDouble(),newLatLon1[0].toDouble())
+        val secondLag = LatLng(newLatLon2[1].toDouble(),newLatLon2[0].toDouble())
+        val thirdLag = LatLng(newLatLon3[1].toDouble(),newLatLon3[0].toDouble())
+        val fourthLag = LatLng(newLatLon4[1].toDouble(),newLatLon4[0].toDouble())
+
+        drawMarker(firstLag,mMap)
+        drawMarker(secondLag,mMap)
+        drawMarker(thirdLag,mMap)
+        drawMarker(fourthLag,mMap)
+
 
     }
 
