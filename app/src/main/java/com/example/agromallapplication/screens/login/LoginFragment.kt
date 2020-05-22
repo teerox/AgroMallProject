@@ -1,4 +1,4 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.login
 
 import android.content.Context
 import android.os.Bundle
@@ -7,12 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentLoginBinding
-import kotlinx.android.synthetic.main.fragment_login.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -27,18 +26,28 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_login,container,false)
         hideView(binding.wrongEmail,binding.wrongPassword)
+        val sharedPref = activity?.getSharedPreferences(
+            "login", Context.MODE_PRIVATE)
+        if (sharedPref!!.getBoolean("logged",false)){
+            //go to dashboard
+            val navigate =
+                LoginFragmentDirections.actionLoginFragmentToDashBoardFragment2()
+                findNavController().navigate(navigate)
+        }
+
 
 
         //Login button
         binding.login.setOnClickListener {
             val userEmail = binding.email.text.toString()
             val userPassword = binding.password.text.toString()
-            Log.e("Info",userEmail)
-            Log.e("Info",userPassword)
 
-            if (userEmail == "test@theagromall.com " && userPassword == "password"){
+            sharedPref.edit().putBoolean("logged",true).apply()
+
+            if (userEmail == "test@theagromall.com" && userPassword == "password"){
                 //move to the dashBoard
-                val navigate = LoginFragmentDirections.actionLoginFragmentToDashBoardFragment2()
+                val navigate =
+                    LoginFragmentDirections.actionLoginFragmentToDashBoardFragment2()
                 findNavController().navigate(navigate)
                 hideView(binding.wrongEmail,binding.wrongPassword)
             }else{

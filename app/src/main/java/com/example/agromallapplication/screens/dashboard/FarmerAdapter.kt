@@ -1,4 +1,4 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -26,11 +26,13 @@ class FarmerAdapter(var farmerArray:ArrayList<Farmer>, private val clickListener
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FarmerAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
         val binding = SingleFarmBinding.inflate(view)
 
-        return ViewHolder(binding)
+        return ViewHolder(
+            binding
+        )
     }
 
     override fun getItemCount(): Int {

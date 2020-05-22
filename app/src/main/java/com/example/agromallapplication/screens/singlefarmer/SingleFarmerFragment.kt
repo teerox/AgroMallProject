@@ -1,4 +1,4 @@
-package com.example.agromallapplication.screens
+package com.example.agromallapplication.screens.singlefarmer
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +11,14 @@ import com.example.agromallapplication.R
 /**
  * A simple [Fragment] subclass.
  */
-class MapFragment : Fragment() {
+class SingleFarmerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return inflater.inflate(R.layout.fragment_single_farmer, container, false)
     }
 
 }
