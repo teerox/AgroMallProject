@@ -19,13 +19,18 @@
         android:id="@+id/dashBoardFragment2"
         android:name="com.example.agromallapplication.screens.dashboard.DashBoardFragment"
         android:label="fragment_dash_board"
-        tools:layout="@layout/fragment_dash_board" >
+        tools:layout="@layout/fragment_dash_board"
+        app:popUpTo="@+id/loginFragment"
+        app:popUpToInclusive="true">
         <action
             android:id="@+id/action_dashBoardFragment2_to_capturingFragment"
             app:destination="@id/capturingFragment" />
         <action
             android:id="@+id/action_dashBoardFragment2_to_singleFarmerFragment"
             app:destination="@id/singleFarmerFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/capturingFragment"
@@ -41,7 +46,12 @@
         android:id="@+id/singleFarmerFragment"
         android:name="com.example.agromallapplication.screens.singlefarmer.SingleFarmerFragment"
         android:label="SingleFarmerFragment"
-        tools:layout="@layout/fragment_single_farmer"/>
+        tools:layout="@layout/fragment_single_farmer">
+        <argument
+            android:name="farmer"
+            app:argType="com.example.agromallapplication.models.Farmer"
+            />
+    </fragment>
     <fragment
         android:id="@+id/mapLocationFragment"
         android:name="com.example.agromallapplication.screens.maplocation.MapLocationFragment"
@@ -49,7 +59,9 @@
         tools:layout="@layout/fragment_map_location">
         <action
             android:id="@+id/action_mapLocationFragment_to_dashBoardFragment2"
-            app:destination="@id/dashBoardFragment2" />
+            app:destination="@id/dashBoardFragment2"
+            app:popUpTo="@+id/dashBoardFragment2"
+            app:popUpToInclusive="true"/>
         <argument
             android:name="farmDetails"
             app:argType="com.example.agromallapplication.models.Farmer" />

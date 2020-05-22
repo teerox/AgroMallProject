@@ -8,7 +8,7 @@ import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.SingleFarmBinding
 import com.example.agromallapplication.models.Farmer
 
-class FarmerAdapter(var farmerArray:ArrayList<Farmer>, private val clickListener: (result:Farmer) -> Unit):
+class FarmerAdapter(private var farmerArray:ArrayList<Farmer>, private val clickListener: (result:Farmer) -> Unit):
     RecyclerView.Adapter<FarmerAdapter.ViewHolder>() {
 
 

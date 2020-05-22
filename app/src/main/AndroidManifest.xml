@@ -28,7 +28,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name=".screens.MainActivity">
+        <activity android:name=".screens.MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

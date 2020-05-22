@@ -59,6 +59,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="50dp"
+                        android:id="@+id/logout"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="1dp"
                         android:src="@drawable/ic_notifications_black_24dp"
@@ -95,32 +96,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center"
                         android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@color/colorPrimary"
-                            android:src="@drawable/human" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:text="@string/companyName"
+                            android:textColor="@color/colorPrimaryDark"
                             android:fontFamily="@font/lobster"
-                            android:text="Farmers"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="20"
-                            android:textSize="20sp" />
+                            android:textSize="40sp"
+                             />
 
                     </LinearLayout>
 
@@ -129,7 +118,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -144,8 +135,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/lobster"
-                            android:text="Farms"
-                            android:textColor="@color/colorPrimary"
+                            android:text="Farmers"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -153,7 +144,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="20"
+                            android:id="@+id/numberOfFarmers"
+                            android:text=""
                             android:textSize="20sp" />
 
                     </LinearLayout>

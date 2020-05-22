@@ -31,5 +31,5 @@ data class Farmer(
 ): Parcelable
 {
     @IgnoredOnParcel
-    @PrimaryKey(autoGenerate = true)var uid:Int? = 0
+    @PrimaryKey(autoGenerate = true)var uid:Int = 0
 }

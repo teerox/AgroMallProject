@@ -3,6 +3,7 @@ package com.example.agromallapplication.screens.capture
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -14,10 +15,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.room.util.CursorUtil.getColumnIndexOrThrow
+import com.example.agromallapplication.BaseApplication
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentCapturingBinding
 import com.example.agromallapplication.models.Farmer
+import com.example.agromallapplication.screens.viewmodel.FarmerViewModel
 import com.example.agromallapplication.utils.Permissions.REQUEST_CODE
 import com.example.agromallapplication.utils.Permissions.REQUEST_TAKE_PHOTO
 import com.example.agromallapplication.utils.Permissions.getCameraPermission
@@ -27,6 +32,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 /**
@@ -37,13 +43,21 @@ class CapturingFragment : Fragment() {
     lateinit var binding:FragmentCapturingBinding
     private var farmerPicture = ""
     private lateinit var currentPhotoPath: String
+    lateinit var intent: Intent
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var farmerViewModel: FarmerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (requireActivity().application as BaseApplication).component.inject(this)
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_capturing,container,false)
+
+        farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
         binding.photo.setOnClickListener {
             takePhoto()
@@ -57,13 +71,27 @@ class CapturingFragment : Fragment() {
             val farmName = binding.farmNameID.text.toString()
             val farmLocation = binding.farmLocationID.text.toString()
 
-            val farmerDetails = Farmer(name,address,email,phoneNumber,farmerPicture,farmName,farmLocation)
-
-            val action =
-                CapturingFragmentDirections.actionCapturingFragmentToMapLocationFragment(
-                    farmerDetails
+            val validate =
+                farmerViewModel.captureValidation(
+                    binding.root,
+                    name,
+                    phoneNumber,
+                    address,
+                    email,
+                    farmerPicture,
+                    farmName,
+                    farmLocation
                 )
-            findNavController().navigate(action)
+            if (validate) {
+                val farmerDetails =
+                    Farmer(name, address, email, phoneNumber, farmerPicture, farmName, farmLocation)
+
+                val action =
+                    CapturingFragmentDirections.actionCapturingFragmentToMapLocationFragment(
+                        farmerDetails
+                    )
+                findNavController().navigate(action)
+            }
         }
 
 
@@ -74,11 +102,17 @@ class CapturingFragment : Fragment() {
     //select photo from gallery
     private fun uploadPicture(){
         getGalleryPermission(requireActivity())
-        val image = Intent()
-            image.type = "image/*"
-            image.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(image,REQUEST_CODE)
-        
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, REQUEST_CODE)
+        }else{
+            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE)
+        }
     }
 
 
@@ -149,6 +183,7 @@ class CapturingFragment : Fragment() {
         alert.setCanceledOnTouchOutside(false)
         alert.show()
     }
+
 
 
 
