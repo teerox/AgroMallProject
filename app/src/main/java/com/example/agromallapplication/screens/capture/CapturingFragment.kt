@@ -101,17 +101,20 @@ class CapturingFragment : Fragment() {
 
     //select photo from gallery
     private fun uploadPicture(){
-        getGalleryPermission(requireActivity())
-        if (Build.VERSION.SDK_INT < 19) {
-            intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, REQUEST_CODE)
+        if(getGalleryPermission(requireActivity())) {
+            if (Build.VERSION.SDK_INT < 19) {
+                intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(intent, REQUEST_CODE)
+            } else {
+                intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_CODE)
+            }
         }else{
-            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE)
+            getGalleryPermission(requireActivity())
         }
     }
 
@@ -136,29 +139,32 @@ class CapturingFragment : Fragment() {
 
     //Activate Camera to take Picture
     private fun camera() {
-        getCameraPermission(requireActivity())
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
+        if (getCameraPermission(requireActivity())) {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                // Ensure that there's a camera activity to handle the intent
+                takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+                    // Create the File where the photo should go
+                    val photoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        // Error occurred while creating the File
 
-                    null
+                        null
+                    }
+                    // Continue only if the File was successfully created
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            this.requireContext(),
+                            "com.example.agromallapplication.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                    }
                 }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this.requireContext(),
-                        "com.example.agromallapplication.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-                }
-            }
+             }
+        }else{
+            getCameraPermission(requireActivity())
         }
     }
 

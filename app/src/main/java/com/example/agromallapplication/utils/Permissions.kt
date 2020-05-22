@@ -57,29 +57,31 @@ object Permissions{
     }
 
 
-     fun getGalleryPermission(activity: Activity){
-       if (ContextCompat.checkSelfPermission(activity.applicationContext,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-            == PackageManager.PERMISSION_GRANTED) {
-
-        } else {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSIONS_REQUEST
-            )
-
-        }
+     fun getGalleryPermission(activity: Activity):Boolean{
+         return if (ContextCompat.checkSelfPermission(activity.applicationContext,
+                 Manifest.permission.READ_EXTERNAL_STORAGE)
+             == PackageManager.PERMISSION_GRANTED) {
+             true
+         } else {
+             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                 PERMISSIONS_REQUEST
+             )
+             false
+         }
     }
 
-     fun getCameraPermission(activity: Activity) {
+     fun getCameraPermission(activity: Activity):Boolean {
 
-        if (ContextCompat.checkSelfPermission(activity.applicationContext,
-                Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED) {
-        } else {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA),
-                PERMISSIONS_REQUEST
-            )
-        }
+         return if (ContextCompat.checkSelfPermission(activity.applicationContext,
+                 Manifest.permission.CAMERA)
+             == PackageManager.PERMISSION_GRANTED) {
+             true
+         } else {
+             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA),
+                 PERMISSIONS_REQUEST
+             )
+             false
+         }
     }
 
 
