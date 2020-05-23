@@ -106,11 +106,13 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
             displayView(emailView)
             DrawableCompat.setTint(emailEditText.background,ContextCompat.getColor(context, R.color.wrong))
             DrawableCompat.setTint(passwordEditText.background,ContextCompat.getColor(context, R.color.colorWhite))
+            hideEdit(passwordView)
             false
         } else if(password.isEmpty()){
             displayView(passwordView)
             DrawableCompat.setTint(passwordEditText.background,ContextCompat.getColor(context, R.color.wrong))
             DrawableCompat.setTint(emailEditText.background,ContextCompat.getColor(context, R.color.colorWhite))
+            hideEdit(emailView)
              false
         }else if (!email.contains('@') || !email.contains('.') || email != "test@theagromall.com") {
             hideView(emailView,passwordView)
@@ -132,6 +134,9 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
 
     private fun displayView(view: View){
         view.visibility = View.VISIBLE
+    }
+    private fun hideEdit(view: View){
+        view.visibility = View.GONE
     }
 
     fun hideView(emailView: View, passwordView: View){
