@@ -1,6 +1,7 @@
 package com.example.agromallapplication.screens.dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,8 @@ import com.example.agromallapplication.BaseApplication
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentDashBoardBinding
 import com.example.agromallapplication.models.Farmer
+import com.example.agromallapplication.screens.MainActivity
+import com.example.agromallapplication.screens.login.LoginActivity
 import com.example.agromallapplication.screens.viewmodel.FarmerViewModel
 import com.example.agromallapplication.utils.Permissions.getLocationPermission
 import javax.inject.Inject
@@ -83,8 +86,11 @@ class DashBoardFragment : Fragment() {
             val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
             dialogBuilder.setMessage("Do you want to logout")
             dialogBuilder.setPositiveButton("Yes"){ _, _ ->
-                val action = DashBoardFragmentDirections.actionDashBoardFragment2ToLoginFragment()
-                findNavController().navigate(action)
+              //move to login page
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+
                 val sharedPreferences = activity?.getSharedPreferences(
                     "login", Context.MODE_PRIVATE)
                     sharedPreferences!!.edit().clear().apply()
@@ -99,11 +105,11 @@ class DashBoardFragment : Fragment() {
             alert.setCanceledOnTouchOutside(false)
             alert.show()
         }
-
-
-        requireActivity().onBackPressedDispatcher.addCallback {
-            requireActivity().finish()
-        }
+//
+//
+//        requireActivity().onBackPressedDispatcher.addCallback {
+//            requireActivity().finish()
+//        }
         return binding.root
     }
 

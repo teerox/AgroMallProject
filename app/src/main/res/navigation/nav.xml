@@ -3,18 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/dashBoardFragment2">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.agromallapplication.screens.login.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login"
-        >
-        <action
-            android:id="@+id/action_loginFragment_to_dashBoardFragment2"
-            app:destination="@id/dashBoardFragment2" />
-    </fragment>
+
     <fragment
         android:id="@+id/dashBoardFragment2"
         android:name="com.example.agromallapplication.screens.dashboard.DashBoardFragment"
@@ -28,9 +19,6 @@
         <action
             android:id="@+id/action_dashBoardFragment2_to_singleFarmerFragment"
             app:destination="@id/singleFarmerFragment" />
-        <action
-            android:id="@+id/action_dashBoardFragment2_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/capturingFragment"
