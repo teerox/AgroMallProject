@@ -57,11 +57,6 @@ class SingleFarmerFragment : Fragment() , OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
-        requireActivity().requestWindowFeature(Window.FEATURE_NO_TITLE)
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         (requireActivity().application as BaseApplication).component.inject(this)
 
         if (savedInstanceState != null) {

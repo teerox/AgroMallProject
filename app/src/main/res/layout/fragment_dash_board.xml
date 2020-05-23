@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.dashboard.DashBoardFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,11 +24,13 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:orientation="vertical"
                 android:padding="16dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,44 +40,46 @@
                     android:textSize="40sp" />
 
                 <TextView
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sanseriffic"
-                    android:id="@+id/time"
+                    android:fontFamily="@font/gotham"
                     android:text="Good Afternoon Admin"
                     android:textColor="@color/colorWhite"
 
                     />
 
             </LinearLayout>
+
             <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
                 android:id="@+id/reportToolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    >
+                    android:layout_margin="20dp">
 
                     <ImageView
+                        android:id="@+id/logout"
                         android:layout_width="30dp"
                         android:layout_height="60dp"
-                        android:id="@+id/logout"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="1dp"
-                        android:src="@drawable/ic_logout_svgrepo_com"
                         android:clickable="true"
                         android:focusable="true"
+                        android:src="@drawable/ic_logout_svgrepo_com"
                         android:text="Logout" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
                         android:layout_alignBottom="@id/logout"
                         android:layout_alignParentRight="true"
+                        android:text="logout"
 
-                        android:text="logout"/>
+                        android:textColor="@color/colorWhite" />
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -104,9 +109,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="0.5"
-                        android:layout_gravity="center"
                         android:orientation="vertical">
 
 
@@ -114,11 +119,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/lobster"
                             android:text="@string/companyName"
                             android:textColor="@color/colorPrimaryDark"
-                            android:fontFamily="@font/lobster"
-                            android:textSize="40sp"
-                             />
+                            android:textSize="40sp" />
 
                     </LinearLayout>
 
@@ -126,9 +130,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1.5"
-                        android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -150,10 +154,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/numberOfFarmers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:id="@+id/numberOfFarmers"
                             android:text=""
                             android:textSize="20sp" />
 
@@ -166,14 +170,27 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/single_farm"
-            app:spanCount="2"
+            android:background="@color/colorPrimaryDark"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            />
+            app:spanCount="2"
+            tools:listitem="@layout/single_farm" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/nofarmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/calibri"
+        android:textStyle="bold"
+        android:text="No Famer OnBoard"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNew"

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -49,6 +50,7 @@ class DashBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         (requireActivity().application as BaseApplication).component.inject(this)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_dash_board,container,false)
         getLocationPermission(requireActivity())
@@ -56,9 +58,12 @@ class DashBoardFragment : Fragment() {
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
         val greeting = farmerViewModel.time()
-        binding.time.text = "Hi $greeting"
+        binding.time.text = "Hi, $greeting"
         recyclerView = binding.recycler
 
+        if(binding.numberOfFarmers.text != "0"){
+            binding.nofarmer.visibility = View.GONE
+        }
 
         farmerViewModel.getAllFarmers().observeForever {
             Log.e("All farmers",it.toString())

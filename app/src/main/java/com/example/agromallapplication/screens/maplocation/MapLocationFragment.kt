@@ -64,6 +64,8 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         (requireActivity().application as BaseApplication).component.inject(this)
 
         if (savedInstanceState != null) {

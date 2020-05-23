@@ -29,6 +29,11 @@
         <action
             android:id="@+id/action_capturingFragment_to_mapLocationFragment"
             app:destination="@id/mapLocationFragment" />
+        <action
+            android:id="@+id/action_capturingFragment_to_dashBoardFragment2"
+            app:destination="@id/dashBoardFragment2"
+            app:popUpTo="@+id/dashBoardFragment2"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/singleFarmerFragment"

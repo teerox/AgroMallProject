@@ -76,8 +76,8 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
                             LatLng(thirdCoordinate[1].toDouble(),thirdCoordinate[0].toDouble()),
                             LatLng(fourthCoordinate[1].toDouble(),fourthCoordinate[0].toDouble())
                         )
-                        .strokeColor(Color.RED)
-                        .fillColor(Color.BLUE)
+                        .strokeColor(Color.parseColor("#00602e"))
+                        .fillColor(Color.WHITE)
                 )
             add.isVisible = true
             return true

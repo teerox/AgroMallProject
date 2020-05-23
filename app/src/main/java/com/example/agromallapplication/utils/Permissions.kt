@@ -29,7 +29,6 @@ object Permissions{
                 Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true
-            getLocationPermission(activity)
         } else {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSIONS_REQUEST

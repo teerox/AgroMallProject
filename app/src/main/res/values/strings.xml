@@ -4,7 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to">Welcome to</string>
-    <string name="companyName">AgroMall</string>
+    <string name="companyName">FarmMall</string>
     <string name="email">Email</string>
     <string name="wrong_email_address">Wrong email address</string>
     <string name="password">Password</string>

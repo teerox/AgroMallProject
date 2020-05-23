@@ -49,6 +49,8 @@ class CapturingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         (requireActivity().application as BaseApplication).component.inject(this)
 
@@ -93,6 +95,10 @@ class CapturingFragment : Fragment() {
             }
         }
 
+        binding.back.setOnClickListener {
+            val action = CapturingFragmentDirections.actionCapturingFragmentToDashBoardFragment2()
+            findNavController().navigate(action)
+        }
 
         return binding.root
     }
@@ -228,6 +234,7 @@ class CapturingFragment : Fragment() {
             }
         }
     }
+
 
 
 
