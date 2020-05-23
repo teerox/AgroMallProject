@@ -1,12 +1,18 @@
 package com.example.agromallapplication.screens.viewmodel
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.basgeekball.awesomevalidation.AwesomeValidation
+import com.basgeekball.awesomevalidation.ValidationStyle
+import com.example.agromallapplication.R
 import com.example.agromallapplication.models.Farmer
 import com.example.agromallapplication.repository.FarmerRepository
 import com.google.android.gms.maps.GoogleMap
@@ -15,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 
@@ -24,6 +31,7 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
     private val viewModelJob = SupervisorJob()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
 
 
     fun getAllFarmers(): LiveData<List<Farmer>> {
@@ -68,8 +76,8 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
                             LatLng(thirdCoordinate[1].toDouble(),thirdCoordinate[0].toDouble()),
                             LatLng(fourthCoordinate[1].toDouble(),fourthCoordinate[0].toDouble())
                         )
-                        .strokeColor(Color.RED)
-                        .fillColor(Color.BLUE)
+                        .strokeColor(Color.parseColor("#00602e"))
+                        .fillColor(Color.WHITE)
                 )
             add.isVisible = true
             return true
@@ -87,39 +95,119 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
     }
 
 
-    fun loginValidation(view:View,email:String,password:String): Boolean {
+    fun loginValidation(view:View,email:String,
+                        password:String,emailView:
+                        View,
+                        passwordView: View, emailEditText:View,
+                        passwordEditText:View,
+                        context:Context): Boolean {
         //VALIDATION
         return if (email.isEmpty() || password.isEmpty()) {
             Snackbar.make(view, "Name or password cannot be empty", Snackbar.LENGTH_SHORT).show()
             false
-        } else if (!email.contains('@') || !email.contains('.')) {
-            Snackbar.make(view, "Invalid Email Address", Snackbar.LENGTH_SHORT).show()
+        } else if (!email.contains('@') || !email.contains('.') || email != "test@theagromall.com") {
+            hideView(emailView,passwordView)
+            displayView(emailView)
+            DrawableCompat.setTint(emailEditText.background,ContextCompat.getColor(context, R.color.wrong))
+
+            false
+        }else if (password != "password") {
+            hideView(emailView,passwordView)
+            displayView(passwordView)
+            DrawableCompat.setTint(passwordEditText.background,ContextCompat.getColor(context, R.color.wrong))
+
             false
         }else {
             true
         }
     }
 
-    fun captureValidation(view:View,name:String,
+    private fun displayView(view: View){
+        view.visibility = View.VISIBLE
+    }
+
+    fun hideView(emailView: View, passwordView: View){
+        emailView.visibility = View.GONE
+        passwordView.visibility = View.GONE
+
+    }
+
+    fun captureValidation(activity:Activity,name:String,
                           farmerNumber:String,
                           address:String,email:String,
                           farmerPicture:String,farmName:String,
-                          farmLocation:String): Boolean {
+                          farmLocation:String,view: View): Boolean {
         //VALIDATION
-       if(name.isEmpty() ||
-            farmerNumber.isEmpty() ||
-            address.isEmpty() ||
-            farmerPicture.isEmpty() ||
-            email.isEmpty() ||
-            farmName.isEmpty() ||
-            farmLocation.isEmpty() ){
-            Snackbar.make(view, "Empty Field Detected", Snackbar.LENGTH_SHORT).show()
+
+       if(name.isEmpty()){
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerMainName,
+               "[a-zA-Z\\s]+",
+               R.string.err_empty)
             return false
-        } else if (farmerNumber.length < 11 || farmerNumber[0] != '0') {
-           Snackbar.make(view, "Invalid phone, must be 11 digits and start with 0", Snackbar.LENGTH_SHORT).show()
+        }  else if (email.isEmpty()) {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerEmail,
+               "[a-zA-Z\\s]+",
+               R.string.err_empty)
+
+           return false
+       } else if (address.isEmpty()) {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerAddress,
+               "[a-zA-Z\\s]+",
+               R.string.err_empty)
+
+           return false
+       }else if (farmerNumber.isEmpty()) {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerPhoneNumber,
+               Patterns.PHONE,
+               R.string.err_empty)
+           return false
+       } else if (farmName.isEmpty()) {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmNameID,
+               "[a-zA-Z\\s]+",
+               R.string.err_empty)
+
+           return false
+       } else if (farmLocation.isEmpty()) {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmLocationID,
+               "[a-zA-Z\\s]+",
+               R.string.err_empty)
+
+           return false
+       }else if (farmerPicture.isEmpty()) {
+           Snackbar.make(view, " No picture Uploaded", Snackbar.LENGTH_SHORT).show()
+           return false
+       } else if (farmerNumber.length < 11 || farmerNumber[0] != '0') {
+           //mAwesomeValidation.addValidation(name,"name","Error");
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerPhoneNumber,
+               Patterns.PHONE,
+               R.string.err_phone)
+
             return false
         } else if (!email.contains('@') || !email.contains('.')) {
-           Snackbar.make(view, "Invalid Email Address", Snackbar.LENGTH_SHORT).show()
+           mAwesomeValidation.addValidation(
+               activity,
+               R.id.farmerEmail,
+               Patterns.EMAIL_ADDRESS,
+               R.string.err_email)
             return false
         }
             else{
@@ -132,10 +220,10 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
 
     fun coordinateValidation(view: View,firstCoordinate:String,
                              secondCoordinate:String,thirdCoordinate:String,fourthCoordinate:String):Boolean{
-        return if(firstCoordinate.contains("f") ||
-            secondCoordinate.contains("f") ||
-            thirdCoordinate.contains("f") ||
-            fourthCoordinate.contains("f")){
+        return if(firstCoordinate.contains("fail") ||
+            secondCoordinate.contains("fail") ||
+            thirdCoordinate.contains("fail") ||
+            fourthCoordinate.contains("fail")){
             Snackbar.make(view, " Coordinate required", Snackbar.LENGTH_SHORT).show()
             false
         }else{
@@ -151,6 +239,7 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
         marker.position(point)
         mMap.addMarker(marker)
     }
+
 
     fun coordinates(farmer:Farmer,mMap:GoogleMap){
         val newLatLon1 = farmer.farmCoordinate!![0].split("/")
@@ -179,6 +268,24 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
 
     }
 
+    fun time():String {
+        val calender = Calendar.getInstance()
+        return when (calender.get(Calendar.HOUR_OF_DAY)) {
+            in 0..11 -> {
+                "Good Morning"
+            }
+            in 12..15 -> {
+                "Good Afternoon"
+            }
+            in 16..20 -> {
+                "Good Evening"
+            }
+            else -> {
+                "Good Night"
+
+            }
+        }
+    }
 
 
 

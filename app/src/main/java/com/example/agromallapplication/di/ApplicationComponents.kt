@@ -5,7 +5,7 @@ import com.example.agromallapplication.di.module.DatabaseModule
 import com.example.agromallapplication.screens.*
 import com.example.agromallapplication.screens.capture.CapturingFragment
 import com.example.agromallapplication.screens.dashboard.DashBoardFragment
-import com.example.agromallapplication.screens.login.LoginFragment
+import com.example.agromallapplication.screens.login.LoginActivity
 import com.example.agromallapplication.screens.maplocation.MapLocationFragment
 import com.example.agromallapplication.screens.singlefarmer.SingleFarmerFragment
 import dagger.Component
@@ -20,7 +20,7 @@ interface ApplicationComponents {
     fun inject(application: MainActivity)
     fun inject(fragment: CapturingFragment)
     fun inject(fragment: DashBoardFragment)
-    fun inject(fragment: LoginFragment)
+    fun inject(application: LoginActivity)
     fun inject(fragment: SingleFarmerFragment)
     fun inject(fragment: MapLocationFragment)
 }

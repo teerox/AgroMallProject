@@ -4,7 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to">Welcome to</string>
-    <string name="companyName">AgroMall</string>
+    <string name="companyName">FarmMall</string>
     <string name="email">Email</string>
     <string name="wrong_email_address">Wrong email address</string>
     <string name="password">Password</string>
@@ -23,4 +23,8 @@
         functionality.</string>
     <string name="settings">Settings</string>
     <string name="success">Success</string>
+    <string name="err_email">Wrong Email</string>
+    <string name="err_name">Error</string>
+    <string name="err_phone">Wrong Phone must be 11 digits and Start with 0</string>
+    <string name="err_empty">Empty Field</string>
 </resources>
