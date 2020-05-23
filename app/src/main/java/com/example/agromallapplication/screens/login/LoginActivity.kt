@@ -3,7 +3,8 @@ package com.example.agromallapplication.screens.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -25,15 +26,19 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         val binding:LoginActivityBinding  = DataBindingUtil.setContentView(
             this, R.layout.login_activity)
         (applicationContext as BaseApplication).component.inject(this)
 
-        hideView(binding.wrongEmail,binding.wrongPassword)
-
         //viewModel
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
+        farmerViewModel.hideView(binding.wrongEmail,binding.wrongPassword)
         //remember user login
         val sharedPref = this.getSharedPreferences(
             "login", Context.MODE_PRIVATE)
@@ -52,40 +57,28 @@ class LoginActivity : AppCompatActivity() {
             val userEmail = binding.email.text.toString().replace(" ","")
             val userPassword = binding.password.text.toString().replace(" ","")
 
-            val validate = farmerViewModel.loginValidation(binding.root, userEmail, userPassword)
+            val validate = farmerViewModel.loginValidation(binding.root,
+                userEmail,
+                userPassword,
+                binding.wrongEmail,binding.wrongPassword,binding.email,binding.password,this)
 
             if (validate){
-                if (userEmail == "test@theagromall.com" && userPassword == "password") {
                     sharedPref.edit().putBoolean("logged", true).apply()
                     //move to the dashBoard
                     val intent = Intent(applicationContext,MainActivity::class.java)
                     startActivity(intent)
                     finish()
 
-                    hideView(binding.wrongEmail, binding.wrongPassword)
-                } else {
-                    displayView(binding.wrongEmail, binding.wrongPassword)
                 }
-            }
+
         }
 
 
     }
 
 
-    private fun displayView(emailView: View, passwordView: View){
-
-        emailView.visibility = View.VISIBLE
-        passwordView.visibility = View.VISIBLE
-
-    }
 
 
-    private fun hideView(emailView: View, passwordView: View){
-        emailView.visibility = View.GONE
-        passwordView.visibility = View.GONE
-
-    }
 
 
 }

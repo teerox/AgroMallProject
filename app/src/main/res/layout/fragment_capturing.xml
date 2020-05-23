@@ -8,201 +8,228 @@
             type="com.example.agromallapplication.models.Farmer" />
     </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/backgd"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         >
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/backgroundimg" />
 
+        </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/fieldLayout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/welcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Farmers Information"
-                android:textColor="@color/colorWhite"
-                android:textSize="30sp"
-                />
-
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-                app:borderWidth="2dp"
-                app:cornerRadius="8dp"
-                android:padding="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:backgroundTint="@color/colorWhite"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:id="@+id/farmerName"
-                    android:textColor="@color/colorWhite"
-                    android:hint="Name" />
-
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-                app:borderWidth="2dp"
-                app:cornerRadius="8dp"
-                android:padding="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:hint="Phone Number"
-                    android:id="@+id/phoneNumber"
-                    android:textColor="@color/colorWhite"
-                    android:inputType="number"/>
-
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-                app:borderWidth="2dp"
-                app:cornerRadius="8dp"
-                android:padding="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:id="@+id/address"
-                    android:hint="Contact Address" />
-
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-
-
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-                app:borderWidth="2dp"
-                app:cornerRadius="8dp"
-                android:padding="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:textColor="@color/colorWhite"
-                    android:id="@+id/email"
-
-                    android:hint="Email" />
-
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
-                android:id="@+id/photo"
-                android:layout_height="50dp"
-                android:text="Upload Picture"
-                android:textColor="@color/colorWhite"
-                android:layout_marginTop="4dp"
-                android:layout_gravity="end"
-                android:background="@color/colorPrimaryDark"
-                />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
                 <TextView
-                    android:layout_gravity="center"
-                    android:id="@+id/uploadPictureName"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/back"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No Picture Uploaded"
-                    android:textSize="14sp"/>
+                    android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
+                    android:fontFamily="@font/gotham"
+                    android:shadowColor="#57000000"
+                    android:text="Farmers Info"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"/>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/namemain"
+                    android:textColorHint="#FFFFFF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Name"
+                        android:id="@+id/farmerMainName"
+                        android:inputType="text"
+                        android:backgroundTint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FFFFFF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Email"
+                        android:id="@+id/farmerEmail"
+                        android:inputType="textEmailAddress"
+                        android:backgroundTint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FFFFFF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Address"
+                        android:inputType="text"
+                        android:id="@+id/farmerAddress"
+                        android:backgroundTint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FFFFFF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Phone"
+                        android:id="@+id/farmerPhoneNumber"
+                        android:inputType="phone"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:id="@+id/photo"
+                        android:layout_height="50dp"
+                        android:text="Upload Picture"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="end"
+                        android:background="@color/colorPrimaryDark"
+                        />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:id="@+id/uploadPictureName"
+                        android:layout_marginStart="8dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Picture Uploaded"
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
-            <TextView
-                android:id="@+id/farmInformation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Farm Information"
-                android:layout_gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="30sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
 
-
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-                app:borderWidth="2dp"
-                app:cornerRadius="8dp"
-                android:padding="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:backgroundTint="@color/colorWhite"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:id="@+id/farmNameID"
-                    android:textColor="@color/colorWhite"
-                    android:hint="Name" />
-
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
-
-            <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:borderColor="@color/colorWhite"
-
-                >
-
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Farm Location"
-                    android:id="@+id/farmLocationID"
-                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/gotham"
+                    android:shadowColor="#57000000"
+                    android:text="Farm Info"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
                     />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FFFFFF">
 
-            </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Farm Name"
+                        android:id="@+id/farmNameID"
+                        android:inputType="text"
+                        android:backgroundTint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/next"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/colorWhite"
-                android:text="Next"
-                android:textAllCaps="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FFFFFF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Farm Location"
+                        android:id="@+id/farmLocationID"
+                        android:inputType="text"
+                        android:backgroundTint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonshape"
+                    android:fontFamily="@font/gotham"
+                    android:text="Next"
+                    android:id="@+id/next"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:layout_marginTop="44dp"
+                    android:layout_marginBottom="16dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
 
 
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </layout>

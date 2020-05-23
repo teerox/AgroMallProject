@@ -1,5 +1,6 @@
 package com.example.agromallapplication.screens.dashboard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -42,6 +43,7 @@ class DashBoardFragment : Fragment() {
     lateinit var farmerViewModel: FarmerViewModel
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +55,10 @@ class DashBoardFragment : Fragment() {
 
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
+        val greeting = farmerViewModel.time()
+        binding.time.text = "Hi $greeting"
         recyclerView = binding.recycler
+
 
         farmerViewModel.getAllFarmers().observeForever {
             Log.e("All farmers",it.toString())

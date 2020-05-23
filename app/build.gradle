@@ -84,4 +84,8 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
 
+    //validation
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
+
 }

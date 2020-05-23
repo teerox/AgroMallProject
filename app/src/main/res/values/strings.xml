@@ -23,4 +23,8 @@
         functionality.</string>
     <string name="settings">Settings</string>
     <string name="success">Success</string>
+    <string name="err_email">Wrong Email</string>
+    <string name="err_name">Error</string>
+    <string name="err_phone">Wrong Phone must be 11 digits and Start with 0</string>
+    <string name="err_empty">Empty Field</string>
 </resources>

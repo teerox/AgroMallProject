@@ -3,10 +3,8 @@ package com.example.agromallapplication.screens.maplocation
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -66,7 +64,6 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         (requireActivity().application as BaseApplication).component.inject(this)
 
         if (savedInstanceState != null) {
@@ -86,6 +83,12 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         binding.secondCoordinateID.isEnabled = false
         binding.thirdCoordinateID.isEnabled = false
         binding.fourthCoordinateID.isEnabled = false
+        binding.second.visibility = View.GONE
+        binding.third.visibility = View.GONE
+        binding.fourth.visibility = View.GONE
+        binding.mainLayout.visibility = View.GONE
+
+
         mapView = binding.map
 
         mapView.onCreate(savedInstanceState)
@@ -103,90 +106,86 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
         //first Coordinate Button
         binding.firstCoordinateButton.setOnClickListener {
+            getLocationPermission(requireActivity())
             deviceLocation(object :GetResult{
                 override fun onSuccess(result: String) {
                     Log.e("First", result)
-                    binding.firstCoordinateID.setText("Success")
+                    binding.firstCoordinateID.setText("Successfull")
                     coordinateArray.clear()
                     coordinateArray.add(result)
-
+                    showFieldView(binding.second)
                 }
 
                 override fun onFailure(failed: String) {
                     binding.firstCoordinateID.setText(failed)
+                    Snackbar.make(binding.root, "Change Device Location",Snackbar.LENGTH_LONG).show()
                 }
-
             })
+
         }
 
         //second Coordinate Button
         binding.secondCoordinateButton.setOnClickListener {
             getLocationPermission(requireActivity())
-            if(binding.firstCoordinateID.text.isEmpty()){
-                Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
-               // binding.secondCoordinateID.setText("Failed")
-
-            }else {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Second", result)
-                        binding.secondCoordinateID.setText("Success")
+                        binding.secondCoordinateID.setText("Successfull")
                         coordinateArray2.clear()
                         coordinateArray2.add(result)
+                        showFieldView(binding.third)
                     }
 
                     override fun onFailure(failed: String) {
                         binding.firstCoordinateID.setText(failed)
+                        Snackbar.make(binding.root, "Change Device Location",Snackbar.LENGTH_LONG).show()
                     }
-
                 })
-            }
+
         }
 
 
         //third Coordinate Button
         binding.thirdCoordinateButton.setOnClickListener {
             getLocationPermission(requireActivity())
-            if(binding.secondCoordinateID.text.isEmpty()){
-                Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
-            }else {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Third", result)
-                        binding.thirdCoordinateID.setText("Success")
+                        binding.thirdCoordinateID.setText("Successfull")
                         coordinateArray3.clear()
                         coordinateArray3.add(result)
+                        showFieldView(binding.fourth)
                     }
 
                     override fun onFailure(failed: String) {
                         binding.firstCoordinateID.setText(failed)
+                        Snackbar.make(binding.root, "Change Device Location",Snackbar.LENGTH_LONG).show()
                     }
 
                 })
-            }
+
         }
 
 
         //fourth Coordinate Button
         binding.fourthCoordinateButton.setOnClickListener {
             getLocationPermission(requireActivity())
-            if(binding.thirdCoordinateID.text.isEmpty()){
-                Toast.makeText(requireContext(),"Initial Field Empty",Toast.LENGTH_LONG).show()
-            }else {
                 deviceLocation(object : GetResult {
                     override fun onSuccess(result: String) {
                         Log.e("Fourth", result)
-                        binding.fourthCoordinateID.setText("Success")
+                        binding.fourthCoordinateID.setText("Successfull")
                         coordinateArray4.clear()
                         coordinateArray4.add(result)
+                        showFieldView(binding.mainLayout)
+                        drawPolygonOnMap()
                     }
-
                     override fun onFailure(failed: String) {
                         binding.firstCoordinateID.setText(failed)
+                        Snackbar.make(binding.root, "Change Device Location",Snackbar.LENGTH_LONG).show()
                     }
 
                 })
-            }
+
         }
 
 
@@ -211,32 +210,29 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                 findNavController().navigate(action)
                 Snackbar.make(binding.root, "Information Saved", Snackbar.LENGTH_LONG).show()
             }else {
-                Snackbar.make(binding.root, "Coordinates Not Generated", Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, "Error saving information Please try Again", Snackbar.LENGTH_LONG)
                     .show()
             }
         }
 
 
-        //Draw Polygon on Map
-        binding.drawPolygon.setOnClickListener {
-            saveCoordinatesInArray()
-            Log.e("Cordinate",allCoordinateArray.size.toString())
-            Log.e("Cordinatesss",firstCoordinateID.text.toString())
-            val validate = farmerViewModel.coordinateValidation(binding.root,
-                firstCoordinateID.text.toString(),
-                secondCoordinateID.text.toString(),
-                thirdCoordinateID.text.toString(),
-                firstCoordinateID.text.toString())
-            if(validate) {
-                farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
-                val success = farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
-                if (success) {
-                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(requireContext(), "failed", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+//        //Draw Polygon on Map
+//        binding.drawPolygon.setOnClickListener {
+//            saveCoordinatesInArray()
+//            val validate = farmerViewModel.coordinateValidation(binding.root,
+//                firstCoordinateID.text.toString(),
+//                secondCoordinateID.text.toString(),
+//                thirdCoordinateID.text.toString(),
+//                firstCoordinateID.text.toString())
+//            if(validate) {
+//                farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
+//                val success = farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
+//                if (success) {
+//                    Snackbar.make(binding.root, "Polygon Drawn", Snackbar.LENGTH_LONG).show()
+//                }
+//            }
+//        }
+
 
         return binding.root
     }
@@ -285,9 +281,6 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                                 latitude = mLastKnownLocation!!.latitude
                                 longitude = mLastKnownLocation!!.longitude
                                 getResult.onSuccess("$longitude/$latitude")
-
-                                //SUPPOSED TO ADD TO DB HERE FOR START AND STOP
-
 
 
                             }
@@ -340,6 +333,27 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
     }
 
 
+
+    fun showFieldView(view: View){
+        view.visibility = View.VISIBLE
+    }
+
+
+    fun drawPolygonOnMap(){
+        saveCoordinatesInArray()
+        val validate = farmerViewModel.coordinateValidation(binding.root,
+            firstCoordinateID.text.toString(),
+            secondCoordinateID.text.toString(),
+            thirdCoordinateID.text.toString(),
+            firstCoordinateID.text.toString())
+        if(validate) {
+            farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
+//            val success = farmerViewModel.drawPolygon(allCoordinateArray, mMap, binding.root)
+//            if (success) {
+//                Snackbar.make(binding.root, "Polygon Drawn", Snackbar.LENGTH_LONG).show()
+//            }
+        }
+    }
 
 
 }

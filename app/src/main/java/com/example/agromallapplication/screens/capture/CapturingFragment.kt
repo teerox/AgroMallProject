@@ -8,16 +8,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.room.util.CursorUtil.getColumnIndexOrThrow
 import com.example.agromallapplication.BaseApplication
 import com.example.agromallapplication.R
 import com.example.agromallapplication.databinding.FragmentCapturingBinding
@@ -27,7 +24,6 @@ import com.example.agromallapplication.utils.Permissions.REQUEST_CODE
 import com.example.agromallapplication.utils.Permissions.REQUEST_TAKE_PHOTO
 import com.example.agromallapplication.utils.Permissions.getCameraPermission
 import com.example.agromallapplication.utils.Permissions.getGalleryPermission
-
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -53,9 +49,12 @@ class CapturingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         (requireActivity().application as BaseApplication).component.inject(this)
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_capturing,container,false)
+
 
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
 
@@ -64,24 +63,24 @@ class CapturingFragment : Fragment() {
         }
 
         binding.next.setOnClickListener {
-            val name = binding.farmerName.text.toString()
-            val phoneNumber = binding.phoneNumber.text.toString()
-            val address = binding.address.text.toString()
-            val email = binding.email.text.toString()
+            val name = binding.farmerMainName.text.toString()
+            val phoneNumber = binding.farmerPhoneNumber.text.toString()
+            val address = binding.farmerAddress.text.toString()
+            val email = binding.farmerEmail.text.toString()
             val farmName = binding.farmNameID.text.toString()
             val farmLocation = binding.farmLocationID.text.toString()
-
             val validate =
                 farmerViewModel.captureValidation(
-                    binding.root,
+                    requireActivity(),
                     name,
                     phoneNumber,
                     address,
                     email,
                     farmerPicture,
                     farmName,
-                    farmLocation
+                    farmLocation,binding.root
                 )
+            farmerViewModel.mAwesomeValidation.validate()
             if (validate) {
                 val farmerDetails =
                     Farmer(name, address, email, phoneNumber, farmerPicture, farmName, farmLocation)
@@ -115,6 +114,7 @@ class CapturingFragment : Fragment() {
             }
         }else{
             getGalleryPermission(requireActivity())
+            uploadPicture()
         }
     }
 
@@ -165,6 +165,7 @@ class CapturingFragment : Fragment() {
              }
         }else{
             getCameraPermission(requireActivity())
+            camera()
         }
     }
 

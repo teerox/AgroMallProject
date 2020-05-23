@@ -2,10 +2,8 @@ package com.example.agromallapplication.screens.singlefarmer
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -59,6 +57,11 @@ class SingleFarmerFragment : Fragment() , OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
+        requireActivity().requestWindowFeature(Window.FEATURE_NO_TITLE)
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         (requireActivity().application as BaseApplication).component.inject(this)
 
         if (savedInstanceState != null) {
