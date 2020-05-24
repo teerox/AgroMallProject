@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/dashBoardFragment2"
         android:name="com.example.agromallapplication.screens.dashboard.DashBoardFragment"
-        android:label="fragment_dash_board"
+        android:label="Home"
         tools:layout="@layout/fragment_dash_board"
         app:popUpTo="@+id/loginFragment"
         app:popUpToInclusive="true">
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/capturingFragment"
         android:name="com.example.agromallapplication.screens.capture.CapturingFragment"
-        android:label="CapturingFragment"
+        android:label="Enter Details"
         tools:layout="@layout/fragment_capturing"
         >
         <action
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/singleFarmerFragment"
         android:name="com.example.agromallapplication.screens.singlefarmer.SingleFarmerFragment"
-        android:label="SingleFarmerFragment"
+        android:label="Farmer"
         tools:layout="@layout/fragment_single_farmer">
         <argument
             android:name="farmer"
@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/mapLocationFragment"
         android:name="com.example.agromallapplication.screens.maplocation.MapLocationFragment"
-        android:label="MapLocationFragment"
+        android:label="Select Coordinates"
         tools:layout="@layout/fragment_map_location">
         <action
             android:id="@+id/action_mapLocationFragment_to_dashBoardFragment2"

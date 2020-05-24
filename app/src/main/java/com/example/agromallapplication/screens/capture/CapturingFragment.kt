@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,8 +50,9 @@ class CapturingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+//        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
+
 
         (requireActivity().application as BaseApplication).component.inject(this)
 
@@ -95,10 +97,10 @@ class CapturingFragment : Fragment() {
             }
         }
 
-        binding.back.setOnClickListener {
-            val action = CapturingFragmentDirections.actionCapturingFragmentToDashBoardFragment2()
-            findNavController().navigate(action)
-        }
+//        binding.back.setOnClickListener {
+//            val action = CapturingFragmentDirections.actionCapturingFragmentToDashBoardFragment2()
+//            findNavController().navigate(action)
+//        }
 
         return binding.root
     }

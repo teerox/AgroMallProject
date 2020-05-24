@@ -8,50 +8,26 @@
             type="com.example.agromallapplication.models.Farmer" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@drawable/backgroundimg"
+
         >
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/backgroundimg" />
-
-        </FrameLayout>
-
         <ScrollView
             android:layout_width="match_parent"
+            android:layout_marginTop="32dp"
+
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/back"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
-                    android:fontFamily="@font/gotham"
-                    android:shadowColor="#57000000"
-                    android:text="Farmers Info"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="16dp"/>
-
+                android:layout_margin="20dp"
+                android:layout_marginBottom="16dp"
+                >
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -139,6 +115,7 @@
                         android:layout_width="wrap_content"
                         android:id="@+id/photo"
                         android:layout_height="50dp"
+                        android:padding="8dp"
                         android:text="Upload Picture"
                         android:textColor="#FFFFFF"
                         android:layout_marginTop="4dp"
@@ -228,8 +205,6 @@
 
         </ScrollView>
 
-
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

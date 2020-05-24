@@ -2,25 +2,30 @@ package com.example.agromallapplication.screens.viewmodel
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.basgeekball.awesomevalidation.AwesomeValidation
 import com.basgeekball.awesomevalidation.ValidationStyle
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation
 import com.example.agromallapplication.R
 import com.example.agromallapplication.models.Farmer
 import com.example.agromallapplication.repository.FarmerRepository
+import com.example.agromallapplication.screens.login.LoginActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
+import java.lang.Error
 import java.util.*
 import javax.inject.Inject
 
@@ -206,21 +211,17 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
        }else if (farmerPicture.isEmpty()) {
            Snackbar.make(view, " No picture Uploaded", Snackbar.LENGTH_SHORT).show()
            return false
-       } else if (farmerNumber.length < 11 || farmerNumber[0] != '0') {
-           //mAwesomeValidation.addValidation(name,"name","Error");
-           mAwesomeValidation.addValidation(
-               activity,
-               R.id.farmerPhoneNumber,
-               Patterns.PHONE,
-               R.string.err_phone)
-
-            return false
-        } else if (!email.contains('@') || !email.contains('.')) {
+       }else if (!email.contains('@') || !email.contains('.')) {
            mAwesomeValidation.addValidation(
                activity,
                R.id.farmerEmail,
                Patterns.EMAIL_ADDRESS,
                R.string.err_email)
+           return false
+       } else if (farmerNumber.length < 11 || farmerNumber[0] != '0') {
+           mAwesomeValidation.addValidation(activity,R.id.farmerPhoneNumber, {
+               !(it.length < 11 || it[0] != '0')
+           },R.string.err_phone)
             return false
         }
             else{
@@ -300,6 +301,16 @@ class FarmerViewModel @Inject constructor(private val farmerRepository: FarmerRe
         }
     }
 
+    fun dialogue(context: Context,message:String){
+        val dialogBuilder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
+        dialogBuilder.setMessage(message)
+        dialogBuilder.setPositiveButton("Okay"){ _, _ ->
+        }
+        //show the dialogue
+        val alert = dialogBuilder.create()
+        alert.setCanceledOnTouchOutside(false)
+        alert.show()
+    }
 
 
 }

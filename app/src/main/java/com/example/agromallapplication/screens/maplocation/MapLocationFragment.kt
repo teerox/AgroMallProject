@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -64,8 +65,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+
         (requireActivity().application as BaseApplication).component.inject(this)
 
         if (savedInstanceState != null) {
@@ -79,7 +79,11 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                 container, false)
        // Places.initialize(requireContext().applicationContext, getString(R.string.google_maps_key))
 
+
+
         farmerViewModel = ViewModelProvider(this,viewModelFactory).get(FarmerViewModel::class.java)
+
+        farmerViewModel.dialogue(requireContext(),"Move to four different Edges of the farm before selecting a coordinate ")
 
         binding.firstCoordinateID.isEnabled = false
         binding.secondCoordinateID.isEnabled = false
@@ -180,6 +184,7 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
                         coordinateArray4.add(result)
                         showFieldView(binding.mainLayout)
                         drawPolygonOnMap()
+                        farmerViewModel.dialogue(requireContext(),"Polygon Drawn, Zoom in to View")
                     }
                     override fun onFailure(failed: String) {
                         binding.firstCoordinateID.setText(failed)
@@ -193,28 +198,45 @@ class MapLocationFragment : Fragment(), OnMapReadyCallback {
 
         //Save Button
         binding.save.setOnClickListener {
-            saveCoordinatesInArray()
-            Log.e("Cordinate",allCoordinateArray.toString())
-            if(allCoordinateArray.size == 4) {
-                val completeDetails = Farmer(
-                    farmerDetails.farmerName,
-                    farmerDetails.farmerAddress,
-                    farmerDetails.farmerEmail,
-                    farmerDetails.phoneNumber,
-                    farmerDetails.farmerImage,
-                    farmerDetails.farmName,
-                    farmerDetails.farmLocation,
-                    allCoordinateArray
-                )
-                farmerViewModel.saveFarmerData(completeDetails)
-                val action =
-                    MapLocationFragmentDirections.actionMapLocationFragmentToDashBoardFragment2()
-                findNavController().navigate(action)
-                Snackbar.make(binding.root, "Information Saved", Snackbar.LENGTH_LONG).show()
-            }else {
-                Snackbar.make(binding.root, "Error saving information Please try Again", Snackbar.LENGTH_LONG)
+            val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
+            dialogBuilder.setMessage("Do you want to Save ")
+            dialogBuilder.setPositiveButton("Yes"){ _, _ ->
+                saveCoordinatesInArray()
+                Log.e("Cordinate",allCoordinateArray.toString())
+                if(allCoordinateArray.size == 4) {
+                    val completeDetails = Farmer(
+                        farmerDetails.farmerName,
+                        farmerDetails.farmerAddress,
+                        farmerDetails.farmerEmail,
+                        farmerDetails.phoneNumber,
+                        farmerDetails.farmerImage,
+                        farmerDetails.farmName,
+                        farmerDetails.farmLocation,
+                        allCoordinateArray
+                    )
+                    farmerViewModel.saveFarmerData(completeDetails)
+                    val action =
+                        MapLocationFragmentDirections.actionMapLocationFragmentToDashBoardFragment2()
+                    findNavController().navigate(action)
+                    Snackbar.make(binding.root, "Information Saved", Snackbar.LENGTH_LONG).show()
+                }else {
+                    Snackbar.make(binding.root, "Error saving information Please try Again", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            }
+            dialogBuilder.setNegativeButton("No"){
+                    _,_ ->
+                Snackbar.make(binding.root, "Not Saved", Snackbar.LENGTH_LONG)
                     .show()
             }
+
+            //show the dialogue
+            val alert = dialogBuilder.create()
+            alert.setCanceledOnTouchOutside(false)
+            alert.show()
+
+
+
         }
 
 
